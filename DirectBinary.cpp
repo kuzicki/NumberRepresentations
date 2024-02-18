@@ -5,7 +5,7 @@ DirectBinary::DirectBinary(int number) : Binary(number) {}
 DirectBinary::DirectBinary() : Binary(0) {}
 
 DirectBinary::DirectBinary(const Binary& other) {
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < constBinary._size; i++) {
         bits[i] = other.bits[i];
     }
 }
@@ -22,11 +22,11 @@ DirectBinary DirectBinary::operator*(DirectBinary second) {
     first.toPositiveSign();
     second.toPositiveSign();
 
-    for (int otherIndex = 0; otherIndex < 31; otherIndex++) {
+    for (int otherIndex = 0; otherIndex < constBinary._signBit; otherIndex++) {
         if (second.bits[otherIndex] == 0)
             continue;
 
-        for (int i = 0; i + otherIndex < 31; i++) {
+        for (int i = 0; i + otherIndex < constBinary._signBit; i++) {
             multiplyingStage[i + otherIndex] =
                 first.bits[i] * second.bits[otherIndex];
         }

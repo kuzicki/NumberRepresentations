@@ -1,4 +1,5 @@
 #include "ComplementBinary.h"
+#include <iostream>
 
 ComplementBinary::ComplementBinary(int number) : Binary(number) {
     if (isNegative()) {
@@ -17,19 +18,23 @@ ComplementBinary::ComplementBinary(const Binary& other) : Binary(other) {
 }
 
 ComplementBinary::ComplementBinary(ComplementBinary& other) {
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < constBinary._size; i++) {
         bits[i] = other.bits[i];
     }
 }
 
-ComplementBinary ComplementBinary::operator+(const ComplementBinary& other) {
-    ComplementBinary result(*this);
+ComplementBinary ComplementBinary::operator+(const ComplementBinary& other) const {
+    ComplementBinary result;
+    result.addBits(*this);
     result.addBits(other);
+
     return result;
 }
 
-ComplementBinary ComplementBinary::operator-(ComplementBinary other) {
-    ComplementBinary result = *this;
+ComplementBinary ComplementBinary::operator-(ComplementBinary other) const {
+    ComplementBinary result;
+    result.addBits(*this);
+
     other.changeSign();
     other.inverseBits();
     other.addOneBit();
@@ -44,6 +49,7 @@ int ComplementBinary::Base10() {
         int result = Binary::Base10();
         inverseBits();
         addOneBit();
+        
         return result;
     }
     return Binary::Base10();
@@ -59,7 +65,7 @@ void ComplementBinary::addOneBit() {
     int sum = bits[0] + 1 + carryNumber;
     carryNumber = sum / 2;
     bits[0] = sum % 2;
-    for (int i = 1; i < 32; i++) {
+    for (int i = 1; i < constBinary._size; i++) {
         if (carryNumber == 0)
             break;
 

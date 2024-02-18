@@ -17,7 +17,7 @@ FixedDirectBinary& FixedDirectBinary::operator=(const FixedDirectBinary& other) 
     if (this == &other)
         return *this;
     isScaled = other.isScaled;
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < constBinary._size; i++) {
         bits[i] = other.bits[i];
     }
     return *this;
@@ -78,10 +78,10 @@ FixedDirectBinary FixedDirectBinary::longDivision(FixedDirectBinary& quotient, c
 
 FixedDirectBinary FixedDirectBinary::operator-() const {
     FixedDirectBinary result(0);
-    for (int i = 0; i < 31; i++) {
+    for (int i = 0; i < constBinary._signBit; i++) {
         result.bits[i] = bits[i];
     }
-    result.bits[31] = bits[31] == 0 ? 1 : 0;
+    result.bits[constBinary._signBit] = bits[constBinary._signBit] == 0 ? 1 : 0;
     return result;
 }
 

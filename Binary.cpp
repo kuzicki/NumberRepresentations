@@ -3,7 +3,7 @@
 Binary::Binary() { bits.fill(0); }
 
 Binary::Binary(const Binary& other) {
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < constBinary._size; i++) {
         bits[i] = other.bits[i];
     }
 }
@@ -22,17 +22,17 @@ Binary::Binary(int number) {
         signlessNumber >>= 1;
     }
 
-    while (i < 31) {
+    while (i < constBinary._signBit) {
         bits[i++] = 0;
     }
 
-    bits[31] = number < 0 ? 1 : 0;
+    bits[constBinary._signBit] = number < 0 ? 1 : 0;
 }
 
 std::string Binary::ToString() const {
-    std::string str(32, '\0');
-    for (int i = 0; i < 32; i++) {
-        str[31 - i] = (char)48 + bits[i];
+    std::string str(constBinary._size, '\0');
+    for (int i = 0; i < constBinary._size; i++) {
+        str[constBinary._signBit - i] = (char)48 + bits[i];
     }
     return str;
 }
@@ -45,11 +45,11 @@ int Binary::Base10() {
             number |= 1;
         }
     }
-    return bits[31] == 1 ? -number : number;
+    return bits[constBinary._signBit] == 1 ? -number : number;
 }
 
 void Binary::shiftLeft(int offset) {
-    for (int i = 31; i >= offset; i--) {
+    for (int i = constBinary._signBit; i >= offset; i--) {
         bits[i] = bits[i - offset];
     }
     for (int i = 0; i < offset; i++) {
@@ -58,21 +58,21 @@ void Binary::shiftLeft(int offset) {
 }
 
 void Binary::shiftRight(int offset) {
-    for (int i = 0; i < 32 - offset; i++) {
+    for (int i = 0; i < constBinary._size - offset; i++) {
         bits[i] = bits[i + offset];
     }
-    for (int i = 31; i > 32 - offset; i--) {
+    for (int i = constBinary._signBit; i > constBinary._size - offset; i--) {
         bits[i] = 0;
     }
 }
 
-void Binary::Abs() { bits[31] = 0; }
+void Binary::Abs() { bits[constBinary._signBit] = 0; }
 
 void Binary::empty() { bits.fill(0); }
 
 void Binary::addBits(const Binary& other) {
     int carryNumber = 0;
-    for (int i = 0; i < 32; i++) {
+    for (int i = 0; i < constBinary._size; i++) {
         int sum = bits[i] + other.bits[i] + carryNumber;
         carryNumber = sum / 2;
         bits[i] = sum % 2;
@@ -85,10 +85,10 @@ void Binary::inverseBits() {
     }
 }
 
-void Binary::changeSign() { bits[31] = !bits[31]; }
+void Binary::changeSign() { bits[constBinary._signBit] = !bits[constBinary._signBit]; }
 
-void Binary::toPositiveSign() { bits[31] = 0; }
+void Binary::toPositiveSign() { bits[constBinary._signBit] = 0; }
 
 bool Binary::isNegative() const { 
-    return bits[31] == 1; 
+    return bits[constBinary._signBit] == 1; 
 }

@@ -4,6 +4,16 @@
 #include "ComplementBinary.h"
 #include <vector>
 
+const struct Constants {
+    const int _size = 32;
+    const int _mantissaSize = 23;
+    const int _exponentSize = 8;
+    const int _maxFloatingsize = 128;
+    const int _signBit = 31;
+    const int _exponentBias = 127;
+    const int _mantissaStart = 22;
+} floating;
+
 class FloatingPoint : public Binary {
 public:
     FloatingPoint(float number);

@@ -2,21 +2,23 @@
 #include <iostream>
 
 int main() {
-    FloatingPoint fb1(10.1f);
-    FloatingPoint fb2(21.3f);
+    ComplementBinary ct1(10);
+    ComplementBinary ct2(-13);
+    ComplementBinary res1 = ct1 + ct2;
+    std::cout << "10 + (-13)" << std::endl;
+    std::cout << res1.Base10() << ": " << res1.ToString() << std::endl;
 
-    std::cout << fb1.ToString() << std::endl << fb2.ToString() << std::endl;  
+    DirectBinary db1(10);
+    DirectBinary db2(13);
+    DirectBinary res2 = db1 * db2;
+    std::cout << "10 * 13" << std::endl;
+    std::cout << res2.Base10() << ": " << res2.ToString() << std::endl;
 
-    std::cout << (fb1 + fb2).Base10() << std::endl;
-
-
-    FloatingPoint fp(-10.f);
-    std::cout << fp.ToString() << ": " << fp.Base10() << std::endl;
-
-    FloatingPoint fp1(0.90f);
-    std::cout << fp1.ToString() << ": " << fp1.Base10() << std::endl;
-    FloatingPoint fres = fp + fp1;
-    std::cout << fres.ToString() << ": " << fres.Base10() << std::endl;
+    FixedDirectBinary fx1(13);
+    FixedDirectBinary fx2(8);
+    FixedDirectBinary res3 = fx1 / fx2;
+    std::cout << "13 / 8" << std::endl;
+    std::cout << res3.Base10() << ": " << res3.ToString() << std::endl;
 
     return 0;
 }

@@ -2,6 +2,11 @@
 #include <string>
 #include <array>
 
+const struct ConstBinary {
+    const int _size = 32;
+    const int _signBit = 31;
+} constBinary;
+
 class Binary {
 public:
     Binary();
@@ -14,6 +19,7 @@ public:
     void Abs();
     std::array<int, 32> bits;
 protected:
+    
     int operator[](int index) const { return bits[index]; }
     int& operator[](int index) { return bits[index]; }
     void empty();

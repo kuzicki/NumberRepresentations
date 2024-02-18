@@ -7,8 +7,8 @@ public:
     ComplementBinary();
     ComplementBinary(const Binary& other);
     ComplementBinary(ComplementBinary& other);
-    ComplementBinary operator+(const ComplementBinary& other);
-    ComplementBinary operator-(ComplementBinary other);
+    ComplementBinary operator+(const ComplementBinary& other) const;
+    ComplementBinary operator-(ComplementBinary other) const;
     int Base10();
     void shiftLeft(int offset);
 private:
